@@ -69,7 +69,7 @@ const options = {
   detectRetina: true,
 };
 
-const props = defineProps({
+defineProps({
   blur: {
     type: Boolean,
     default: false,
