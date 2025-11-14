@@ -18,7 +18,7 @@ layout: cover
 
 <v-clicks>
 
-## ***WITH MORE MACROS***
+## _**WITH MORE MACROS**_
 
 </v-clicks>
 
@@ -54,6 +54,7 @@ class: text-xs text-left leading-none p-0.5
 ---
 
 ::left::
+
 - deno
   - deno_broadcast_channel
   - deno_cache
@@ -73,7 +74,7 @@ class: text-xs text-left leading-none p-0.5
 
 ::middle::
 
-- deno 
+- deno
   - deno_maybe_sync
   - deno_napi
   - deno_net
@@ -90,7 +91,7 @@ class: text-xs text-left leading-none p-0.5
   - deno_url
   - deno_web
 
-::right:: 
+::right::
 
 - deno_ast
 - deno_cache_dir
@@ -113,7 +114,6 @@ p {
   margin: 0 !important;
 }
 </style>
-
 
 ---
 layout: cover
@@ -486,14 +486,14 @@ impl JsErrorBox {
 
 <!--
 
-The nice (and extremely viral thing) about anyhow is inline error creation 
+The nice (and extremely viral thing) about anyhow is inline error creation
 
 -->
-
 
 ---
 class: text-sm
 ---
+
 ## Example
 
 ```rust
@@ -531,8 +531,9 @@ class: text-sm
 
 <JumpContent title="class">
 
-The class name. Some special identifiers are available as short-hands for built-in error classes.
-Alternatively, a string literal can be passed which is the error class name.
+The class name. Some special identifiers are available as short-hands for
+built-in error classes. Alternatively, a string literal can be passed which is
+the error class name.
 
 ```rust
 #[derive(deno_error::JsError)]
@@ -552,9 +553,10 @@ pub enum SomeError {
 
 <JumpContent title="property">
 
-A way to declare a field as a property, or used at the top-level to define a property.
+A way to declare a field as a property, or used at the top-level to define a
+property.
 
-```rust 
+```rust
 #[derive(deno_error::JsError)]
 pub enum SomeError {
   #[error("Warning")]
@@ -573,7 +575,6 @@ pub struct SomeError(std::io::Error);
 </JumpContent>
 
 ::right::
-
 
 <JumpContent title="inherit">
 
@@ -768,7 +769,9 @@ layout: cover
 layout: quote
 ---
 
-"From Rust to JavaScript - communicating errors across language boundaries sounds like black magic and it probably is, but Deno's JsError elegantly bridges the gap and makes it look easy along the way.🪄"
+"From Rust to JavaScript - communicating errors across language boundaries
+sounds like black magic and it probably is, but Deno's JsError elegantly bridges
+the gap and makes it look easy along the way.🪄"
 
 <p v-click>or alternatively said:</p>
 
@@ -789,16 +792,15 @@ layout: quote
 <v-clicks>
 
 ```rust
-    if script_err.to_string().starts_with(MODULE_NOT_FOUND) {
+if script_err.to_string().starts_with(MODULE_NOT_FOUND) {
 ```
-
 
 </v-clicks>
 
 <!--
 
 - anyhow app vs thiserror lib
-- fuck anyhow. even for apps. i'll still end up using it though. 
+- fuck anyhow. even for apps. i'll still end up using it though.
 - dont transparent everything
 - you might start creating errors for everything and defining too many errors
 - nesting errors is fine, but box 'em!

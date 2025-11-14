@@ -6,7 +6,9 @@
     :initial="{ y: 80 }"
     :enter="{ y: 0 }"
   >
-    <div class="relative rounded-lg inline-block p-3 px-6 z-20 dark:bg-[#222]/70 bg-[#ddd]/50">
+    <div
+      class="relative rounded-lg inline-block p-3 px-6 z-20 dark:bg-[#222]/70 bg-[#ddd]/50"
+    >
       <h2 class="font-bold text-[--jsr-yellow]">
         {{ title }}
       </h2>

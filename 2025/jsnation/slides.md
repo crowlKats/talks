@@ -331,15 +331,15 @@ This demonstrates our commitment to being a true community project.
 ---
 layout: people
 people:
-- name: Oliver Medhurst
-  title: "creator of porffor"
-  icon: https://github.com/canadahonk.png
-- name: Augustin Mauroy
-  title: "contributor to NodeJS"
-  icon: https://github.com/AugustinMauroy.png
-- name: "Doctor/BlackAsLight"
-  title: "contributor to JSR and Deno"
-  icon: https://github.com/BlackAsLight.png
+  - name: Oliver Medhurst
+    title: "creator of porffor"
+    icon: https://github.com/canadahonk.png
+  - name: Augustin Mauroy
+    title: "contributor to NodeJS"
+    icon: https://github.com/AugustinMauroy.png
+  - name: "Doctor/BlackAsLight"
+    title: "contributor to JSR and Deno"
+    icon: https://github.com/BlackAsLight.png
 ---
 
 # <span class="text-[--jsr-yellow]">Moderation Group</span>

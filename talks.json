@@ -1,5 +1,15 @@
 [
   {
+    "date": "2025-11-16",
+    "conference": {
+      "name": "JSConf JP",
+      "website": "https://jsconf.jp/"
+    },
+    "title": "Deno Wrapped: What happened in Deno this year",
+    "kind": "slidev",
+    "duration": 25
+  },
+  {
     "date": "2025-06-12",
     "conference": {
       "name": "JSNation",
