@@ -34,6 +34,7 @@ await new Deno.Command(Deno.execPath(), {
   stderr: "null",
 }).output();
 
+/*
 const command = new Deno.Command(Deno.execPath(), {
   args: ["task", "serve"],
   stdout: "null",
@@ -46,7 +47,6 @@ try {
 } catch {
   //
 }
-/*
 
 try {
   const browser = await puppeteer.launch();

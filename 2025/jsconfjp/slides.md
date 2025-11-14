@@ -667,10 +667,6 @@ const ws = new WebSocket("wss://api.example.com/socket", {
 
 ---
 
-## Deno 3 RC 0
-
----
-
 ## JSR
 
 <br/>
@@ -689,7 +685,7 @@ const ws = new WebSocket("wss://api.example.com/socket", {
 <br/>
 
 - started collaboration with socket.dev for security reporting
-- GitLab signin
+- GitLab sign-in
 - easy overview of all licenses used by a package and its dependencies
 
 ---
