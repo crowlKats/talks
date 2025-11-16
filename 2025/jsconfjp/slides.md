@@ -36,11 +36,7 @@ layout: cover
 
 ## Timeline
 
-<v-click>
-
 ![alt](/release_timeline.svg)
-
-</v-click>
 
 ---
 layout: fact
@@ -419,17 +415,31 @@ platform defaults to deno.
 
 ## Text & Bytes imports
 
-````md magic-move
+
+<v-switch>
+<template #1>
+
 ```ts
 const image = Deno.readFileSync(import.meta.resolve("./image.png"));
 const text = await Deno.readTextFile(import.meta.resolve("./log.txt"));
 ```
 
+</template>
+<template #2-4>
+
 ```ts
 import message from "./hello.txt" with { type: "text" };
 import bytes from "./hello.txt" with { type: "bytes" };
 import imageBytes from "./image.png" with { type: "bytes" };
+```
 
+</template>
+</v-switch>
+
+
+<v-click at="3">
+
+```ts
 console.log("Message:", message);
 // Message: Hello, Deno!
 
@@ -437,17 +447,19 @@ console.log("Bytes:", bytes);
 // Bytes: Uint8Array(12) [ 72, 101, 108, 108, 111, 44, 32, 68, 101, 110, 111, 33 ]
 
 Deno.serve((_req) => {
-  return new Response(imageBytes, {
-    status: 200,
-    headers: {
-      "Content-Type": "image/png",
-      "Content-Length": imageBytes.byteLength.toString(),
-    },
-  });
+return new Response(imageBytes, {
+status: 200,
+headers: {
+"Content-Type": "image/png",
+"Content-Length": imageBytes.byteLength.toString(),
+},
+});
 });
 // Shows image.png at localhost:8000
 ```
-````
+
+</v-click>
+
 
 <!--
 Supported in deno bundle & deno compile.
@@ -659,11 +671,58 @@ const ws = new WebSocket("wss://api.example.com/socket", {
 
 ---
 
-## deno deploy subcommand
+## `deno deploy` subcommand
 
+<br />
 
+```
+$ deno deploy
+```
+
+<br />
+
+```
+create           [root-path]                   - Create a new application
+env                                            - Modify environmental variables
+  list                                           - List all environmental variables in an application
+  add              <variable> <value>            - Add an environmental variable to the application
+  update-value     <variable> <value>            - Update the value of an environmental variable in the application
+  update-contexts  <variable> [new-contexts...]  - Update the contexts of an environmental variable in the application
+  delete           <string>                      - Delete an environmental variable in the application
+  load             <file>                        - Load environmental variables from a .env file into the application
+
+logs                                           - Stream logs from an application
+setup-aws        [contexts]                    - Setup AWS
+setup-gcp        [contexts]                    - Setup GCP
+logout                                         - Revoke the Deno Deploy token if one is present.
+```
 
 <TimelineIndicator version="5" />
+
+---
+
+## Deno Standard Library
+
+<v-clicks>
+
+- `std/cli`
+
+  interactive utils (`promptSelect`, `promptMultipleSelect`, `Spinner`, `ProgressBar`)
+
+- `std/testing`
+
+  inline snapshot testing (`assertInlineSnapshot`)
+
+- `std/fs`
+
+  Node.js compatibility has been added (Deno compat basic FS APIs are available in Node)
+
+- new packages
+
+  `std/random`, `std/cbor`
+
+
+</v-clicks>
 
 ---
 
@@ -689,13 +748,26 @@ const ws = new WebSocket("wss://api.example.com/socket", {
 - easy overview of all licenses used by a package and its dependencies
 
 ---
-layout: quote
+layout: two-cols-header
 ---
 
 # Thanks
 
-<br />
+
+::left::
 
 https://deno.com
 
+<br />
+
 https://github.com/denoland/deno
+
+::right::
+
+<div class="flex flex-col items-end gap-4 mb-4">
+
+https://talks.kettmeir.dev/2025/jsconfjp
+
+<img src="/qrcode.svg" alt="slides" class="ml-auto">
+
+</div>
