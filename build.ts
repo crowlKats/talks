@@ -1,6 +1,7 @@
 import { join, relative } from "@std/path";
+import talks from "./talks.json" with { type: "json" };
 import { walk } from "./util.ts";
-import puppeteer from "puppeteer";
+//import puppeteer from "puppeteer";
 
 await walk(async (path) => {
   const command = new Deno.Command(Deno.execPath(), {
@@ -33,6 +34,13 @@ await new Deno.Command(Deno.execPath(), {
   stdout: "null",
   stderr: "null",
 }).output();
+
+await Deno.writeTextFile(
+  "dist/conferences",
+  Array.from(new Set(talks.map((talk) => talk.conference.name))).sort().join(
+    "\n",
+  ),
+);
 
 /*
 const command = new Deno.Command(Deno.execPath(), {
