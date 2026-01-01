@@ -1,6 +1,6 @@
 import talks from "./talks.json" with { type: "json" };
 import { renderToString } from "preact-render-to-string";
-import { TbPresentationFilled, TbVideoFilled } from "tb-icons";
+import { TbClockHour1, TbPresentationFilled, TbVideoFilled } from "tb-icons";
 
 interface Talk {
   date: string;
@@ -10,8 +10,7 @@ interface Talk {
   };
   title: string;
   recording?: string;
-  kind: "slidev" | "google" | "talk-only";
-  href?: string;
+  slides: "slidev" | string | null;
   duration?: number; // Duration in minutes
 }
 
@@ -29,7 +28,7 @@ function Index() {
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>
-        <div class="px-32 space-y-16">
+        <div class="px-32 divide-y-1 divide-gray-600">
           {Object.entries(groupedTalks).toSorted(([a], [b]) =>
             b.localeCompare(a)
           ).map(([year, talks]) => (
@@ -47,7 +46,7 @@ function Index() {
 
 function Year({ year, talks }: { year: string; talks: Talk[] }) {
   return (
-    <div>
+    <div class="pt-8 pb-16">
       <h2 class="font-bold text-3xl">{year}</h2>
 
       <div class="grid gap-20 md:grid-cols-3 mt-4">
@@ -62,12 +61,12 @@ function Talk({ talk }: { talk: Talk }) {
 
   let slidesLink = null;
 
-  if (talk.kind === "slidev") {
+  if (talk.slides === "slidev") {
     slidesLink = `/${date.getFullYear()}/${
       talk.conference.name.toLowerCase().replaceAll(" ", "")
     }`;
-  } else if (talk.kind === "google") {
-    slidesLink = talk.href!;
+  } else if (typeof talk.slides === "string") {
+    slidesLink = talk.slides;
   }
 
   return (
@@ -108,8 +107,12 @@ function Talk({ talk }: { talk: Talk }) {
           >
             {talk.conference.name}
           </a>
-          <div class="flex items-center gap-2 whitespace-nowrap">
-            {talk.duration && <span>{talk.duration} min</span>}
+          <div class="flex items-center gap-4 whitespace-nowrap">
+            {talk.duration && (
+              <span class="flex items-center gap-1">
+                <TbClockHour1 /> <span>{talk.duration} min</span>
+              </span>
+            )}
             <time datetime={talk.date}>
               {date.toLocaleDateString(undefined, {
                 month: "long",

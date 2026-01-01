@@ -10,7 +10,7 @@
       "conference",
       "title",
       "duration",
-      "kind"
+      "slides"
     ],
     "properties": {
       "date": {
@@ -41,38 +41,28 @@
         "format": "uri",
         "description": "URL to recording, if it exists."
       },
-      "kind": {
-        "type": "string",
-        "description": "The type of presentation format (e.g., 'slidev', 'google').",
-        "enum": ["slidev", "google", "talk-only"]
-      },
-      "href": {
-        "type": "string",
-        "format": "uri",
-        "description": "URL to the presentation, if applicable (e.g., Google Slides link).",
-        "pattern": "^https://docs\\.google\\.com/presentation/d/.*$"
+      "slides": {
+        "description": "The slides for the presentation. Can be 'slidev' for Slidev-based slides, a Google Slides URL, or null if no slides are available.",
+        "oneOf": [
+          {
+            "type": "string",
+            "const": "slidev"
+          },
+          {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://docs\\.google\\.com/presentation/d/.*$"
+          },
+          {
+            "type": "null"
+          }
+        ]
       },
       "duration": {
         "type": "number",
         "description": "The duration of the talk"
       }
     },
-    "additionalProperties": false,
-    "allOf": [
-      {
-        "if": {
-          "properties": {
-            "kind": {
-              "const": "google"
-            }
-          }
-        },
-        "then": {
-          "required": [
-            "href"
-          ]
-        }
-      }
-    ]
+    "additionalProperties": false
   }
 }
