@@ -730,6 +730,8 @@ logout                                         - Revoke the Deno Deploy token if
 
 <br/>
 
+<v-clicks>
+
 - governance board was formed and announced
 - onboarded external moderators
 - yarn, pnpm & vlt have added native support
@@ -737,15 +739,19 @@ logout                                         - Revoke the Deno Deploy token if
 - in-depth download chart
 - built-in ticketing system
 
+<div>
 <br/>
 
 ### Coming soon
 
 <br/>
+</div>
 
 - started collaboration with socket.dev for security reporting
 - GitLab sign-in
 - easy overview of all licenses used by a package and its dependencies
+
+</v-clicks>
 
 ---
 layout: two-cols-header
