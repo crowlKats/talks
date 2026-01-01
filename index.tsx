@@ -11,7 +11,8 @@ interface Talk {
   title: string;
   recording?: string;
   slides: "slidev" | string | null;
-  duration?: number; // Duration in minutes
+  kind?: "talk" | "session";
+  duration: number; // Duration in minutes
 }
 
 function Index() {
@@ -97,7 +98,8 @@ function Talk({ talk }: { talk: Talk }) {
       <div class="flex-grow flex flex-col min-h-[4.5rem]">
         <h3 class="font-semibold mt-1">
           <span class="bg-[#272727] px-1 py-0.5 leading-relaxed">
-            {talk.title}
+            {talk.title}{" "}
+            {talk.kind == "session" && <span>(discussion session)</span>}
           </span>
         </h3>
         <div class="flex justify-between items-end gap-4 text-sm mt-auto">
@@ -108,11 +110,9 @@ function Talk({ talk }: { talk: Talk }) {
             {talk.conference.name}
           </a>
           <div class="flex items-center gap-4 whitespace-nowrap">
-            {talk.duration && (
-              <span class="flex items-center gap-1">
-                <TbClockHour1 /> <span>{talk.duration} min</span>
-              </span>
-            )}
+            <span class="flex items-center gap-1">
+              <TbClockHour1 /> <span>{talk.duration} min</span>
+            </span>
             <time datetime={talk.date}>
               {date.toLocaleDateString(undefined, {
                 month: "long",

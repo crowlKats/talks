@@ -7,6 +7,7 @@
     },
     "title": "Deno Wrapped: What happened in Deno this year",
     "slides": "slidev",
+    "recording": "https://www.youtube.com/watch?v=7eqSSuUfcRM",
     "duration": 25
   },
   {
@@ -17,7 +18,7 @@
     },
     "title": "From any to this: Using concrete error types instead of a catchall",
     "slides": "slidev",
-    "duration": 30
+    "duration": 25
   },
   {
     "date": "2025-06-28",
@@ -26,6 +27,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "JSR - 1 year later",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },
@@ -36,6 +38,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "Deno AMA",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },
@@ -46,6 +49,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "JavaScript™ Standards",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },
@@ -56,6 +60,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "Deno Deploy EA",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },
@@ -128,6 +133,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "How Deno works under the hood",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },
@@ -138,6 +144,7 @@
       "website": "https://jscraftcamp.org/"
     },
     "title": "Introduction to JSR and how it works",
+    "kind": "session",
     "slides": null,
     "duration": 60
   },

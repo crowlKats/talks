@@ -58,6 +58,10 @@
           }
         ]
       },
+      "kind": {
+        "type": "string",
+        "enum": ["talk", "session"]
+      },
       "duration": {
         "type": "number",
         "description": "The duration of the talk"
