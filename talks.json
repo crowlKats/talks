@@ -10,6 +10,16 @@
     "duration": 25
   },
   {
+    "date": "2025-10-09",
+    "conference": {
+      "name": "EuroRust",
+      "website": "https://eurorust.eu/"
+    },
+    "title": "From any to this: Using concrete error types instead of a catchall",
+    "kind": "slidev",
+    "duration": 30
+  },
+  {
     "date": "2025-06-12",
     "conference": {
       "name": "JSNation",
@@ -43,6 +53,27 @@
     "duration": 25
   },
 
+  {
+    "date": "2024-11-11",
+    "conference": {
+      "name": "Rustlab",
+      "website": "https://rustlab.it/"
+    },
+    "title": "How to integrate Javascript in your Rust program",
+    "kind": "google",
+    "href": "https://docs.google.com/presentation/d/1nUOicqyq58nNdP9PF3F33THb0oBv-ZRbYdBzDJZpWS0/edit?usp=sharing",
+    "duration": 25
+  },
+  {
+    "date": "2024-10-23",
+    "conference": {
+      "name": "Codemotion Milan",
+      "website": "https://conferences.codemotion.com/milan2024/"
+    },
+    "title": "Building a Browser Based Code Editor",
+    "kind": "talk-only",
+    "duration": 45
+  },
   {
     "date": "2024-06-12",
     "conference": {

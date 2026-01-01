@@ -172,7 +172,7 @@ layout: two-cols-header
 
 ::right::
 
-``` {1,2,3,8}
+```{1,2,3,8}
 $ deno task serve
 Task build deno run -RW build.ts
 Task generate deno run -RW generate.ts
@@ -213,7 +213,6 @@ Deno.serve((req) => {
 ```
 $ OTEL_DENO=true deno run --unstable-otel --allow-net server.ts
 ```
-
 
 <TimelineIndicator version="2" />
 
@@ -343,24 +342,21 @@ export default {
 - more `deno fmt` options & tagged templates support
 - easier `deno check` usage
 - windows code signing
-- Open Telemetry auto-instrumentation for `node:http` traces & V8 JS engine metrics
+- Open Telemetry auto-instrumentation for `node:http` traces & V8 JS engine
+  metrics
 - Open Telemetry span context propagators
 
 </v-clicks>
-
 
 <!--
 To use local npm modules, you’ll need a local node_modules folder, which you can achieve with either "nodeModulesDir": "auto" or "nodeModulesDir": "manual".
 -->
 
-
 <TimelineIndicator version="3" />
 
---- 
+---
 
 ## `deno bundle`
-
-
 
 <br />
 
@@ -380,7 +376,6 @@ $ deno bundle --minify main.ts
 
 </div>
 
-
 <div>
 
 ```
@@ -396,7 +391,6 @@ $ deno bundle --platform browser --output bundle.js --sourcemap=external app.jsx
 ```
 
 </v-clicks>
-
 
 <TimelineIndicator version="4" />
 
@@ -414,7 +408,6 @@ platform defaults to deno.
 ---
 
 ## Text & Bytes imports
-
 
 <v-switch>
 <template #1>
@@ -436,7 +429,6 @@ import imageBytes from "./image.png" with { type: "bytes" };
 </template>
 </v-switch>
 
-
 <v-click at="3">
 
 ```ts
@@ -447,24 +439,23 @@ console.log("Bytes:", bytes);
 // Bytes: Uint8Array(12) [ 72, 101, 108, 108, 111, 44, 32, 68, 101, 110, 111, 33 ]
 
 Deno.serve((_req) => {
-return new Response(imageBytes, {
-status: 200,
-headers: {
-"Content-Type": "image/png",
-"Content-Length": imageBytes.byteLength.toString(),
-},
-});
+  return new Response(imageBytes, {
+    status: 200,
+    headers: {
+      "Content-Type": "image/png",
+      "Content-Length": imageBytes.byteLength.toString(),
+    },
+  });
 });
 // Shows image.png at localhost:8000
 ```
 
 </v-click>
 
-
 <!--
 Supported in deno bundle & deno compile.
 
-nextjs and other frameworks support these & more, their approaches are not spec-friendly and introduce unnecessary complexity via domain-specific languages and ahead-of-time compilers that modify the language. 
+nextjs and other frameworks support these & more, their approaches are not spec-friendly and introduce unnecessary complexity via domain-specific languages and ahead-of-time compilers that modify the language.
 
 We’ve wanted to add importing other file types earlier, but also want to be aligned with the spec and avoid introducing breaking changes.
 Some people might know that this feature actually goes ahead of current spec.
@@ -563,9 +554,7 @@ $ deno --deny-import=cdn.jsdelivr.net main.ts
 ```
 ````
 
-
 <TimelineIndicator version="5" />
-
 
 <!--
 -P flag needs to be set to use the permissions from the config file.
@@ -588,6 +577,7 @@ $ DENO_AUDIT_PERMISSIONS=./permission.log deno run -A main.ts
 { "v": 1, "datetime": "2025-09-05T12:14:18Z", "permission": "read", "value": "data.csv" }
 { "v": 1, "datetime": "2025-09-05T12:14:26Z", "permission": "write", "value": "log.txt" }
 ```
+
 <br />
 
 ```json
@@ -598,7 +588,6 @@ $ DENO_AUDIT_PERMISSIONS=./permission.log deno run -A main.ts
   "value": "FOO"
 }
 ```
-
 
 <TimelineIndicator version="5" />
 
@@ -635,7 +624,6 @@ const result = await Deno.bundle({
 console.log(result);
 ```
 
-
 <TimelineIndicator version="5" />
 
 ---
@@ -662,12 +650,9 @@ const ws = new WebSocket("wss://api.example.com/socket", {
 
 <br/>
 
-
 <img src="/deno_install_summary.png" class="h-70% w-auto" />
 
-
 <TimelineIndicator version="5" />
-
 
 ---
 
@@ -707,7 +692,8 @@ logout                                         - Revoke the Deno Deploy token if
 
 - `std/cli`
 
-  interactive utils (`promptSelect`, `promptMultipleSelect`, `Spinner`, `ProgressBar`)
+  interactive utils (`promptSelect`, `promptMultipleSelect`, `Spinner`,
+  `ProgressBar`)
 
 - `std/testing`
 
@@ -715,12 +701,12 @@ logout                                         - Revoke the Deno Deploy token if
 
 - `std/fs`
 
-  Node.js compatibility has been added (Deno compat basic FS APIs are available in Node)
+  Node.js compatibility has been added (Deno compat basic FS APIs are available
+  in Node)
 
 - new packages
 
   `std/random`, `std/cbor`
-
 
 </v-clicks>
 
@@ -758,7 +744,6 @@ layout: two-cols-header
 ---
 
 # Thanks
-
 
 ::left::
 

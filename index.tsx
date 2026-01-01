@@ -10,6 +10,8 @@ interface Talk {
   };
   title: string;
   recording?: string;
+  kind: "slidev" | "google" | "talk-only";
+  href?: string;
   duration?: number; // Duration in minutes
 }
 
@@ -18,7 +20,7 @@ function Index() {
   for (const talk of talks) {
     const year = new Date(talk.date).getFullYear();
     groupedTalks[year] ??= [];
-    groupedTalks[year].push(talk);
+    groupedTalks[year].push(talk as Talk);
   }
 
   return (
@@ -58,6 +60,16 @@ function Year({ year, talks }: { year: string; talks: Talk[] }) {
 function Talk({ talk }: { talk: Talk }) {
   const date = new Date(talk.date);
 
+  let slidesLink = null;
+
+  if (talk.kind === "slidev") {
+    slidesLink = `/${date.getFullYear()}/${
+      talk.conference.name.toLowerCase().replaceAll(" ", "")
+    }`;
+  } else if (talk.kind === "google") {
+    slidesLink = talk.href!;
+  }
+
   return (
     <div class="flex flex-col h-full">
       <div class="mb-3">
@@ -68,9 +80,11 @@ function Talk({ talk }: { talk: Talk }) {
           />
 
           <div class="mt-5">
-            <a href={talk.recording}>
-              <TbPresentationFilled class="size-5" />
-            </a>
+            {slidesLink && (
+              <a href={slidesLink}>
+                <TbPresentationFilled class="size-5" />
+              </a>
+            )}
             {talk.recording && (
               <a href={talk.recording}>
                 <TbVideoFilled class="size-5" />

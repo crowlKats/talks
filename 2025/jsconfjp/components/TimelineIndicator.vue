@@ -13,6 +13,6 @@ const props = defineProps<{
 }>();
 
 const asset = computed(() =>
-    resolveAssetUrl(`/timeline_indicator_${props.version}.svg`)
+  resolveAssetUrl(`/timeline_indicator_${props.version}.svg`)
 );
 </script>

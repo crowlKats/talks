@@ -44,13 +44,17 @@
       "kind": {
         "type": "string",
         "description": "The type of presentation format (e.g., 'slidev', 'google').",
-        "enum": ["slidev", "google"]
+        "enum": ["slidev", "google", "talk-only"]
       },
       "href": {
         "type": "string",
         "format": "uri",
         "description": "URL to the presentation, if applicable (e.g., Google Slides link).",
         "pattern": "^https://docs\\.google\\.com/presentation/d/.*$"
+      },
+      "duration": {
+        "type": "number",
+        "description": "The duration of the talk"
       }
     },
     "additionalProperties": false,
