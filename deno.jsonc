@@ -2,7 +2,7 @@
   "nodeModulesDir": "auto",
   "tasks": {
     "install": "deno install && deno run -A npm:puppeteer browsers install chrome && deno run -A install.ts",
-    "index": "deno run -A npm:@tailwindcss/cli -i styles.css -o ./dist/styles.css && deno run -A index.tsx",
+    "index": "deno run -A npm:@tailwindcss/cli -i styles.css -o ./dist/styles.css && deno run -A index.tsx && cp -r covers dist",
     "build": "deno run -A build.ts && deno task index",
     "serve": "deno run -A serve.ts"
   },

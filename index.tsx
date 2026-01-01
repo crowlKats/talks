@@ -62,12 +62,20 @@ function Talk({ talk }: { talk: Talk }) {
 
   let slidesLink = null;
 
+  const talkId = talk.conference.name.toLowerCase().replaceAll(" ", "");
+
   if (talk.slides === "slidev") {
-    slidesLink = `/${date.getFullYear()}/${
-      talk.conference.name.toLowerCase().replaceAll(" ", "")
-    }`;
+    slidesLink = `/${date.getFullYear()}/${talkId}`;
   } else if (typeof talk.slides === "string") {
     slidesLink = talk.slides;
+  }
+
+  const imgPath = `/covers/${date.getFullYear()}/${talkId}.png`;
+  let hasImage = true;
+  try {
+    Deno.readFileSync(`.${imgPath}`);
+  } catch (_) {
+    hasImage = false;
   }
 
   return (
@@ -75,8 +83,10 @@ function Talk({ talk }: { talk: Talk }) {
       <div class="mb-3">
         <div class="flex justify-between gap-3">
           <img
-            src="covers/2025_jsnation.png"
-            class="rounded-2xl shadow w-9/10 bg-gray-800/30 min-h-32 p-6 box-content flex items-center justify-center"
+            src={imgPath}
+            class={`rounded-2xl shadow w-9/10 bg-gray-800/30 min-h-32 box-content flex items-center justify-center ${
+              hasImage ? "" : "p-6"
+            }`}
             alt={talk.title}
           />
 

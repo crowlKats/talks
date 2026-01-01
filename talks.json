@@ -83,7 +83,7 @@
     "title": "JSR: under the hood & native support in the ecosystem",
     "slides": "https://docs.google.com/presentation/d/1DAgRPumfFNPxU0gmWGNMQALomrIlDvvUHCELTgWDdDk/edit?usp=sharing",
     "recording": "https://www.youtube.com/watch?v=Lc15pLhzGao",
-    "duration": 45
+    "duration": 25
   },
   {
     "date": "2025-02-02",
@@ -156,7 +156,8 @@
     },
     "title": "History of WebGPU in Deno",
     "slides": "https://docs.google.com/presentation/d/1HZ0aRDB4pJ2kDAeVYcO0vBFakQZBzg7uV6SgUunjRBE/edit?usp=sharing",
-    "duration": 45
+    "recording": "https://www.youtube.com/watch?v=jkKwvzRhFyY",
+    "duration": 20
   },
   {
     "date": "2024-02-03",
