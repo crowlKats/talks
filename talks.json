@@ -75,35 +75,36 @@
     "duration": 45
   },
   {
-    "date": "2024-06-12",
+    "date": "2024-05-17",
     "conference": {
       "name": "JSNation",
       "website": "https://jsnation.com/"
     },
-    "title": "JSR: Building an Open Registry for the JavaScript Community",
-    "kind": "slidev",
-    "duration": 30
+    "title": "JSR – Next Generation JavaScript Registry",
+    "kind": "google",
+    "href": "https://docs.google.com/presentation/d/1--hZq7O9hdc0h-UVKOXq8Ccr9WQWtjHNdFMQNq3bZXM/edit?usp=sharing",
+    "duration": 7
   },
   {
-    "date": "2024-06-02",
+    "date": "2024-06-03",
     "conference": {
       "name": "Web Engines Hackfest",
       "website": "https://webengineshackfest.org/"
     },
-    "title": "JSR: under the hood & native support in the ecosystem",
+    "title": "History of WebGPU in Deno",
     "kind": "google",
-    "href": "https://docs.google.com/presentation/d/1DAgRPumfFNPxU0gmWGNMQALomrIlDvvUHCELTgWDdDk/edit?usp=sharing",
+    "href": "https://docs.google.com/presentation/d/1HZ0aRDB4pJ2kDAeVYcO0vBFakQZBzg7uV6SgUunjRBE/edit?usp=sharing",
     "duration": 45
   },
   {
-    "date": "2024-02-02",
+    "date": "2024-02-03",
     "conference": {
       "name": "FOSDEM",
-      "website": "https://fosdem.org/2025/"
+      "website": "https://fosdem.org/2024/"
     },
-    "title": "JSR: from private ownership to open governance",
+    "title": "Building your own JavaScript runtime with Rust",
     "kind": "google",
-    "href": "https://docs.google.com/presentation/d/1nUOxOsO6wrv0PEgzYDeViBTZfSyOVVQDHC76xZ75kgY/edit?usp=sharing",
+    "href": "https://docs.google.com/presentation/d/1VJyN3Zv9aHa7IO8R59hJIViMQI3SJrYqeJSgwLFRGfw/edit?usp=sharing",
     "duration": 25
   }
 ]

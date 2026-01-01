@@ -76,7 +76,8 @@ function Talk({ talk }: { talk: Talk }) {
         <div class="flex justify-between gap-3">
           <img
             src="covers/2025_jsnation.png"
-            class="rounded-2xl shadow w-9/10"
+            class="rounded-2xl shadow w-9/10 bg-gray-800/30 min-h-32 p-6 box-content flex items-center justify-center"
+            alt={talk.title}
           />
 
           <div class="mt-5">

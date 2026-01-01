@@ -29,5 +29,10 @@
   },
   "unstable": [
     "fmt-component"
-  ]
+  ],
+  "fmt": {
+    "exclude": [
+      "./2025/jsconfjp/public/permission_trace.svg"
+    ]
+  }
 }
