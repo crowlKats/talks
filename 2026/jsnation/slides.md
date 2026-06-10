@@ -237,7 +237,7 @@ transition: fade
 <div class="text-xl opacity-80">
 
 ```bash
-deno desktop .
+deno desktop
 ```
 
 </div>
@@ -262,11 +262,11 @@ real, and you can run it.
 layout: fact
 ---
 
-# `deno desktop .`
+# `deno desktop`
 
 <div v-click class="text-2xl opacity-80 mt-4">
 
-Point it at a <span v-mark.cyan>Next.js</span>, <span v-mark.cyan>Astro</span>, <span v-mark.cyan>SvelteKit</span>, <span v-mark.cyan>Nuxt</span>, <span v-mark.cyan>Fresh</span>… project.
+Point it at a <span v-mark.cyan>Next.js</span>, <span v-mark.cyan>Astro</span>, <span v-mark.cyan>SvelteKit</span>, <span v-mark.cyan>Nuxt</span>, <span v-mark.cyan>Remix</span>, <span v-mark.cyan>SolidStart</span>, <span v-mark.cyan>TanStack Start</span>, <span v-mark.cyan>Vite SSR</span>, <span v-mark.cyan>Fresh</span>… project.
 
 </div>
 
@@ -358,7 +358,7 @@ Here's the trick. A desktop app, to us, is a web server plus a window.
 The runtime picks a port, tells Deno.serve to bind there, opens a window, and
 points it at localhost. That's it.
 
-So a framework is just a server too — which is why "deno desktop ." works for any
+So a framework is just a server too — which is why "deno desktop" works for any
 of them. There's no special desktop API you have to adopt to get on screen.
 -->
 
@@ -457,7 +457,7 @@ Deno Desktop: the engine and the Deno runtime are **threads in one process**.
 <div v-click class="mt-4 opacity-80">
 
 Calls go over in-process channels.<br/>
-No sockets. No serialization tax.
+Values still get serialized across isolates — but in-memory: <span v-mark.cyan>no sockets, no cross-process copy</span>.
 
 </div>
 
@@ -496,7 +496,12 @@ call is IPC: serialize, push through a socket, deserialize on the other side.
 
 We don't have two processes for that. The web engine runs on the main thread, the
 Deno tokio runtime on another — same process. Calls are just messages over
-in-process channels. No socket, no serialization overhead.
+in-process channels.
+
+Be honest here: the engine and Deno are separate V8 isolates, so arguments and
+return values still get serialized — there's no shared heap. The win isn't "zero
+serialization," it's that there's no socket and no cross-process copy: it's an
+in-memory hop, not an OS round-trip.
 -->
 
 ---
@@ -611,8 +616,8 @@ Same app code. One flag.
 ::right::
 
 ```bash {all|1|2}
-deno desktop --backend cef     .
-deno desktop --backend webview .
+deno desktop --backend cef     
+deno desktop --backend webview 
 ```
 
 <div v-click="3" class="mt-6">
@@ -670,17 +675,38 @@ Everywhere else you debug **one or the other**.
 
 </div>
 
+<div v-click class="mt-4 text-base opacity-80">
+
+It's just `chrome://inspect` — the DevTools you already know:
+
+</div>
+
+<v-clicks>
+
+<div class="text-base opacity-80">
+
+- Console dropdown switches **Renderer ⇄ Deno**
+- Sources → Threads lists **both isolates**
+- `--inspect-brk` pauses on the page's first line
+- trace a `bind()` call **across** the boundary
+- or from code: `win.openDevtools()`
+
+</div>
+
+</v-clicks>
+
 </div>
 
 ::right::
 
 <div class="flex items-center justify-center h-full">
 
-<Win title="DevTools">
+<Win title="DevTools — chrome://inspect">
   <div class="font-mono text-sm space-y-2">
-    <div>▸ Elements · Console · Network</div>
-    <div class="opacity-60">— page (CEF) —</div>
-    <div class="opacity-60">— deno-desktop runtime —</div>
+    <div>▸ Elements · Console · Sources · Network</div>
+    <div class="opacity-60">Console context ▾</div>
+    <div class="pl-3">• Renderer <span class="opacity-50">(CEF)</span></div>
+    <div class="pl-3">• Deno <span class="opacity-50">(runtime)</span></div>
     <div v-click class="text-cyan-400">one session · both targets</div>
   </div>
 </Win>
@@ -694,6 +720,14 @@ runtime behind it.
 In every other stack you attach to one or the other and keep context-switching.
 With --inspect, a single DevTools session shows both the webview and the Deno
 runtime together. (CEF backend.)
+
+Concretely: it's a normal chrome://inspect session — we multiplex both isolates
+into one window. The Console context dropdown lets you switch between "Renderer"
+and "Deno"; the Sources panel's Threads sidebar lists both. --inspect-brk pauses
+the renderer on the page's very first statement (coordinated so it can't race
+past), and binding calls emit matching logs on both sides so you can follow one
+call across the boundary. You can also pop DevTools from code with
+win.openDevtools() — and scope it with { renderer, deno }.
 -->
 
 ---
@@ -716,15 +750,15 @@ layout: two-cols-header
 ::left::
 
 ```bash {all|1|2|3}
-deno desktop -o MyApp.app   .   # macOS
-deno desktop -o MyApp.msi   .   # Windows
-deno desktop -o MyApp.AppImage . # Linux
+deno desktop -o MyApp.app      # macOS
+deno desktop -o MyApp.exe      # Windows
+deno desktop -o MyApp.AppImage # Linux
 ```
 
 <div v-click="4" class="mt-6 text-lg">
 
 Format is chosen by the **extension**:<br/>
-`.app` · `.dmg` · `.msi` · `.exe` · `.AppImage`
+`.app` · `.dmg` · `.exe` · `.AppImage`
 
 </div>
 
@@ -752,7 +786,7 @@ Self-contained. No system Deno required to run it.
 
 <!--
 First, a real bundle. Same command, but with -o. The extension picks the format:
-a .app or .dmg on macOS, .msi on Windows, .AppImage on Linux.
+a .app or .dmg on macOS, .exe on Windows, .AppImage on Linux.
 
 What comes out is self-contained — your code, the Deno runtime, and the engine,
 all embedded. The end user doesn't need Deno installed.
@@ -765,7 +799,7 @@ layout: fact
 # Build every platform <span v-mark.cyan>from one machine</span>
 
 ```bash
-deno desktop --all-targets .
+deno desktop --all-targets 
 ```
 
 <div class="grid grid-cols-2 gap-x-8 gap-y-1 mt-6 text-base font-mono opacity-80 max-w-2xl mx-auto">
@@ -875,8 +909,8 @@ So your desktop app does too.
 ::right::
 
 ```bash {all|1|2}
-deno desktop .                       # sandboxed
-deno desktop --allow-read=./data .   # just this
+deno desktop                         # sandboxed
+deno desktop --allow-read=./data     # just this
 ```
 
 <div v-click="3" class="mt-6 text-base opacity-80">
@@ -1007,12 +1041,6 @@ Experimental, on a branch, but real. macOS, Windows, Linux. You can run it.
 
 </JumpContent>
 
-<JumpContent title="Coming">
-
-One-flag code signing · a shared system engine (apps drop to a few MB) · warm-start in milliseconds.
-
-</JumpContent>
-
 </div>
 
 <!--
@@ -1040,8 +1068,8 @@ a real framework app → a real binary
 <!--
 DEMO 3 (the closer) — ~3 min, optional if time is tight.
 
-`deno desktop .` on an actual Next/Vite project → native window. Then
-`deno desktop -o App.app .` and open the bundle. End on the artifact.
+`deno desktop` on an actual Next/Vite project → native window. Then
+`deno desktop -o App.app` and open the bundle. End on the artifact.
 
 If you're behind on time, SKIP straight to the recap. Better to land the close
 than to rush a demo.
@@ -1057,7 +1085,7 @@ layout: fact
 
 <v-clicks>
 
-- `deno desktop .` — zero-config, any framework
+- `deno desktop` — zero-config, any framework
 - native APIs, in-process calls, HMR
 - cross-compile · installers · auto-update · permissions
 - no second project, no second toolchain
@@ -1082,7 +1110,7 @@ layout: quote
 <div class="text-xl opacity-90 mt-4">
 
 ```bash
-deno desktop .
+deno desktop
 ```
 
 </div>
@@ -1111,7 +1139,7 @@ Thank you. 🦕
 
 <!--
 That's it. It's experimental, it's out there, and the simplest way to understand
-it is to point it at a project you already have and run "deno desktop dot".
+it is to point it at a project you already have and run "deno desktop".
 
 Try it, tell me what breaks, and thank you.
 
