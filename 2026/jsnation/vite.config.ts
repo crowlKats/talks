@@ -12,4 +12,7 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    allowedHosts: ["conferval-semiexposed-imelda.ngrok-free.dev"],
+  },
 });

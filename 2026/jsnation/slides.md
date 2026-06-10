@@ -14,7 +14,7 @@ layout: cover
 
 <div class="opacity-80 text-xl">
 
-Your web app. As a native app. <span v-mark.underline.cyan>Today.</span>
+Your web app. As a desktop app. <span v-mark.underline.cyan>Today.</span>
 
 </div>
 
@@ -40,9 +40,13 @@ clicksStart: 1
 
 <div class="[&>*]:important-leading-10 opacity-80 pl-4">
 
-Engineer at <span v-mark.auto.cyan=0>Deno</span>
+Engineer at <span v-mark.auto.blue=0>Deno</span>
 
-I work on the <span v-mark.auto.yellow=0>runtime</span> — the parts that touch your OS
+Implemented various Web APIs, including WebGPU & URLPattern
+
+Maintainer of <span v-mark.auto.yellow=0>JSR</span>
+
+TC39 delegate for Deno
 
 </div>
 
@@ -121,7 +125,7 @@ It starts quickly and sips memory.
 
 ::right::
 
-<JumpPanel title="The JS ecosystem">
+<JumpPanel title="JS ecosystem">
 
 npm. Your framework. **Node compatibility.**
 
@@ -131,9 +135,9 @@ The tools you already know.
 
 ::bottom::
 
-<div v-click class="text-2xl mt-4">
+<div v-click class="text-2xl mt-0">
 
-Today you get to pick <span v-mark.underline.red>two</span>.
+Until today you get to pick <span v-mark.underline.red>two</span>.
 
 </div>
 
@@ -175,16 +179,6 @@ Tiny binaries.
 
 <div v-click>
 
-### Electrobun
-
-Bun-based, binary diffs, CEF **or** webview, cross-platform. The closest in spirit.
-
-<span class="opacity-70">…but cross-process IPC, no framework auto-detect, and still a separate toolchain.</span>
-
-</div>
-
-<div v-click>
-
 ### …and all of them
 
 A **second** project. A **second** toolchain. A **second** mental model next to the web app you already have.
@@ -195,9 +189,7 @@ A **second** project. A **second** toolchain. A **second** mental model next to 
 
 <!--
 Quick tour, don't dwell. Electron: great, but huge. Tauri/Dioxus: small, but you
-give up the JS ecosystem and you can't cross-build. Electrobun is actually the
-closest to us now — Bun-based, binary diffs, CEF or webview, cross-platform. I'll
-be honest about where we differ from it in a minute.
+give up the JS ecosystem and you can't cross-build.
 
 The real tax underneath all of them: it's a whole separate thing to learn and
 maintain, bolted onto the app you already wrote.
@@ -262,23 +254,36 @@ real, and you can run it.
 layout: fact
 ---
 
-# `deno desktop`
+## `deno desktop`
 
-<div v-click class="text-2xl opacity-80 mt-4">
+<div v-click="1" class="text-2xl opacity-80 mt-4">
 
-Point it at a <span v-mark.cyan>Next.js</span>, <span v-mark.cyan>Astro</span>, <span v-mark.cyan>SvelteKit</span>, <span v-mark.cyan>Nuxt</span>, <span v-mark.cyan>Remix</span>, <span v-mark.cyan>SolidStart</span>, <span v-mark.cyan>TanStack Start</span>, <span v-mark.cyan>Vite SSR</span>, <span v-mark.cyan>Fresh</span>… project.
-
-</div>
-
-<div v-click class="text-2xl mt-4">
-
-You get a native app. **Zero config.**
+Point it at your framework:
 
 </div>
 
-<div v-click class="text-base opacity-60 mt-6">
+<div v-click="2" class="mt-4 text-xl columns-2 gap-x-16 max-w-xl mx-auto text-left marker:text-cyan-400 [&_li]:text-cyan-400 [&_li]:my-1">
 
-Nobody else does this.
+- Next.js
+- Astro
+- SvelteKit
+- Nuxt
+- Remix
+- SolidStart
+- TanStack Start
+- Vite SSR
+- Fresh
+- and more to come...
+
+</div>
+
+<div v-click="3" class="text-2xl mt-6">
+
+You get a desktop app. **Zero config.**
+
+</div>
+
+<div v-click="4" class="text-base opacity-60 mt-6">
 
 </div>
 
@@ -294,40 +299,29 @@ does.
 -->
 
 ---
-layout: section
----
-
-# How does that even work?
-
-<!--
-Let's pull back the curtain one level — because the mental model is so simple it
-makes everything else obvious.
--->
-
----
 layout: two-cols-header
 ---
 
-# Your app is just a server
+# Or just an HTTP server
 
 ::left::
 
-<div class="pr-4">
+<div class="pr-4 text-lg">
 
-The runtime:
+No desktop entrypoint. No special API.
 
 <v-clicks>
 
-- allocates a local port
-- sets `DENO_SERVE_ADDRESS`
-- opens a native window
-- navigates it to `http://127.0.0.1:<port>`
+- `Deno.serve()`
+- `export default { fetch }`
+- Node's `http` / **Express** — via Node compat
+- …or your framework's own server
 
 </v-clicks>
 
 <div v-click class="mt-4 opacity-80">
 
-Your code is an ordinary `Deno.serve()`.
+If it answers HTTP, it runs on the desktop.
 
 </div>
 
@@ -335,14 +329,23 @@ Your code is an ordinary `Deno.serve()`.
 
 ::right::
 
-```ts {all|2-4}
-// main.ts — the whole app
-Deno.serve(() =>
-  new Response("<h1>Hello, desktop 👋</h1>", {
-    headers: { "content-type": "text/html" },
-  })
-);
+```ts {all|7}
+// main.ts — an ordinary Express app, unchanged
+import express from "npm:express";
+
+const app = express();
+app.get("/", (_req, res) => res.send("<h1>Hello, desktop 👋</h1>"));
+
+app.listen(); // ← the desktop runtime picks the port
 ```
+
+<div v-click class="mt-3">
+
+```bash
+deno desktop main.ts
+```
+
+</div>
 
 <div v-click class="mt-4">
 
@@ -353,13 +356,16 @@ Deno.serve(() =>
 </div>
 
 <!--
-Here's the trick. A desktop app, to us, is a web server plus a window.
+We don't need to explain the plumbing. The point is simpler: a Deno Desktop app
+is just an HTTP server with a window in front of it.
 
-The runtime picks a port, tells Deno.serve to bind there, opens a window, and
-points it at localhost. That's it.
+And it doesn't have to be Deno.serve — anything that speaks HTTP works: a fetch
+default export, a Node http server, an Express app via Node compat, or your
+framework's own server. Whatever's listening gets shown.
 
-So a framework is just a server too — which is why "deno desktop" works for any
-of them. There's no special desktop API you have to adopt to get on screen.
+Here's a stock Express app, untouched — the same thing you'd `node server.js`.
+`deno desktop` just opens a window pointed at it. That's also why framework
+auto-detect works: a framework is just a server too.
 -->
 
 ---
@@ -519,7 +525,7 @@ fun.
 layout: fact
 ---
 
-# `deno desktop --hmr`
+## `deno desktop --hmr`
 
 <div v-click class="text-2xl opacity-80 mt-4">
 
@@ -593,15 +599,15 @@ layout: two-cols-header
 
 <div v-click class="mt-4">
 
-**CEF** <span class="opacity-70">(default)</span><br/>
-Bundled Chromium. Pixel-identical everywhere. Larger.
+**WebView** <span class="opacity-70">(default)</span><br/>
+The OS's own engine. Tiny bundle. Varies by platform.
 
 </div>
 
 <div v-click class="mt-3">
 
-**WebView**<br/>
-The OS's own engine. Tiny bundle. Varies by platform.
+**CEF**<br/>
+Bundled Chromium. Pixel-identical everywhere. Larger.
 
 </div>
 
@@ -616,8 +622,8 @@ Same app code. One flag.
 ::right::
 
 ```bash {all|1|2}
-deno desktop --backend cef     
 deno desktop --backend webview 
+deno desktop --backend cef     
 ```
 
 <div v-click="3" class="mt-6">
@@ -634,14 +640,86 @@ WebView  ██            tiny · OS-dependent
 <!--
 You also get to choose your rendering engine, per build, with one flag.
 
-CEF — bundled Chromium — is the default: identical rendering on every OS, like
-Electron, at the cost of size.
+WebView — the OS's own engine — is the default: tiny bundle, but rendering and
+features vary by platform and OS version.
 
-WebView uses the OS's own engine: tiny bundle, but rendering and features vary by
-platform and OS version.
+CEF — bundled Chromium — gives identical rendering on every OS, like Electron, at
+the cost of size.
 
 Same code either way. It's literally a flag. Pick your point on the consistency-
 versus-size line.
+-->
+
+---
+layout: two-cols-header
+---
+
+# …or no engine at all
+
+::left::
+
+<div class="pr-4 text-lg">
+
+A third backend: **`raw`**.
+
+<v-clicks>
+
+- a bare native window — **no web engine**
+- no Chromium, no webview, no DOM
+- you get the window's **GPU surface**
+- draw with **WebGPU** directly
+
+</v-clicks>
+
+<div v-click class="mt-4 text-base opacity-80">
+
+The smallest bundle there is. For games, canvases, custom renderers.
+
+</div>
+
+</div>
+
+::right::
+
+```ts {all|1|3-4|6-7|9-13|15-16}
+const win = new Deno.BrowserWindow({ title: "GPU app" });
+
+const adapter = await navigator.gpu.requestAdapter();
+const device = await adapter.requestDevice();
+
+// the OS window, as a WebGPU surface
+const surface = win.getNativeWindow();
+
+const ctx = surface.getContext("webgpu");
+ctx.configure({
+  device,
+  format: navigator.gpu.getPreferredCanvasFormat(),
+});
+
+// …encode a render pass, then:
+surface.present();
+```
+
+<div v-click="4" class="mt-4 text-sm opacity-70">
+
+`webview` · `cef` · `raw` — same window & event API, three ways to fill it.
+
+</div>
+
+<!--
+And there's a third option for when you don't want a web page at all: the raw
+backend.
+
+It's a bare native window — winit under the hood — with no engine behind it. No
+Chromium, no system webview, no DOM. Instead you take the window's GPU surface
+with getNativeWindow() and drive it with the standard WebGPU API: request an
+adapter and device, getContext("webgpu") on the surface, configure it with the
+preferred format, encode your render passes, and call present() each frame.
+
+That's the smallest bundle possible: just Deno, the windowing layer, and wgpu.
+It's the escape hatch for games, custom canvases, GPU-driven UIs — anything where
+HTML isn't the right tool. Same BrowserWindow, same events; you just paint the
+pixels yourself.
 -->
 
 ---
@@ -652,38 +730,19 @@ layout: two-cols-header
 
 ::left::
 
-<div class="pr-4 text-lg">
+<div class="pr-4 text-base">
 
-A desktop app has two worlds:
-
-<v-clicks>
-
-- the **page** (your UI in the engine)
-- the **Deno** runtime (your backend)
-
-</v-clicks>
-
-<div v-click class="mt-4">
-
-Everywhere else you debug **one or the other**.
-
-</div>
+Two worlds: the **page** and the **Deno** runtime. Everywhere else you debug one or the other.
 
 <div v-click class="mt-3 text-xl">
 
-`--inspect` gives you <span v-mark.cyan>both</span>, in one DevTools.
-
-</div>
-
-<div v-click class="mt-4 text-base opacity-80">
-
-It's just `chrome://inspect` — the DevTools you already know:
+`--inspect` gives you <span v-mark.cyan>both</span>, in one `chrome://inspect`.
 
 </div>
 
 <v-clicks>
 
-<div class="text-base opacity-80">
+<div class="mt-3 opacity-80">
 
 - Console dropdown switches **Renderer ⇄ Deno**
 - Sources → Threads lists **both isolates**
@@ -694,6 +753,12 @@ It's just `chrome://inspect` — the DevTools you already know:
 </div>
 
 </v-clicks>
+
+<div v-click class="mt-3 text-sm opacity-70">
+
+Unified view is <span v-mark.cyan>CEF-only</span> — `--backend cef`.
+
+</div>
 
 </div>
 
@@ -718,8 +783,10 @@ Debugging. Your app is two worlds: the page running in the engine, and the Deno
 runtime behind it.
 
 In every other stack you attach to one or the other and keep context-switching.
-With --inspect, a single DevTools session shows both the webview and the Deno
-runtime together. (CEF backend.)
+With --inspect, a single DevTools session shows both the renderer and the Deno
+runtime together. One caveat to call out: this unified view is CEF-only — the
+multiplexer drives CEF's renderer debug port, so since webview is the default now
+you pass --backend cef to get it. (On webview you still debug the Deno side.)
 
 Concretely: it's a normal chrome://inspect session — we multiplex both isolates
 into one window. The Console context dropdown lets you switch between "Renderer"
@@ -762,9 +829,15 @@ Format is chosen by the **extension**:<br/>
 
 </div>
 
+<div v-click="5" class="mt-3 text-base opacity-70">
+
+Soon: `.msi` · `.deb` · `.rpm`
+
+</div>
+
 ::right::
 
-<div v-click="5">
+<div v-click="6">
 
 <Win title="MyApp.app">
   <div class="text-sm font-mono opacity-80 space-y-1">
@@ -796,7 +869,9 @@ all embedded. The end user doesn't need Deno installed.
 layout: fact
 ---
 
-# Build every platform <span v-mark.cyan>from one machine</span>
+## Build every platform <span v-mark.cyan>from one machine</span>
+
+<br/>
 
 ```bash
 deno desktop --all-targets 
@@ -831,7 +906,7 @@ deno compile --target, because it IS deno compile underneath.
 layout: two-cols-header
 ---
 
-# Updates, built in
+## Updates, built in
 
 ::left::
 
@@ -947,23 +1022,23 @@ class: text-sm
 
 # The landscape
 
-<div class="overflow-hidden mt-2">
+<div class="overflow-hidden mt-2 text-sm leading-normal [&_td]:py-1.5 [&_th]:py-1.5">
 
-|                           | Electron | Tauri / Dioxus | Electrobun     | **Deno Desktop**        |
-| ------------------------- | -------- | -------------- | -------------- | ----------------------- |
-| **Language**              | JS/TS    | Rust + web     | JS/TS (Bun)    | **JS/TS (Deno)**        |
-| **Consistent UI**         | ✅       | ❌             | ✅ (CEF)       | **✅ (CEF)**            |
-| **npm / Node compat**     | ✅       | ❌             | ✅             | **✅**                  |
-| **Backend ↔ UI**          | IPC      | IPC            | IPC            | **in-process channels** |
-| **Framework auto-detect** | ❌       | ❌             | ❌             | **✅**                  |
-| **HMR**                   | ❌       | ✅             | ✅             | **✅**                  |
-| **Built-in auto-update**  | ✅ full  | ❌             | ✅ diff        | **✅ diff**             |
-| **Cross-compile**         | ✅       | ❌             | ✅             | **✅ `--target`**       |
-| **Permission sandbox**    | ❌       | ❌             | ❌             | **✅**                  |
+|                           | Electron | Tauri / Dioxus | **Deno Desktop**        |
+| ------------------------- | -------- | -------------- | ----------------------- |
+| **Language**              | JS/TS    | Rust + web     | **JS/TS (Deno)**        |
+| **Consistent UI**         | ✅       | ❌             | **✅ (CEF)**            |
+| **npm / Node compat**     | ✅       | ❌             | **✅**                  |
+| **Backend ↔ UI**          | IPC      | IPC            | **in-process channels** |
+| **Framework auto-detect** | ❌       | ❌             | **✅**                  |
+| **HMR**                   | ❌       | ✅             | **✅**                  |
+| **Built-in auto-update**  | ✅ full  | ❌             | **✅ diff**             |
+| **Cross-compile**         | ✅       | ❌             | **✅ `--target`**       |
+| **Permission sandbox**    | ❌       | ❌             | **✅**                  |
 
 </div>
 
-<div v-click class="mt-3 text-base opacity-80">
+<div v-click class="mt-2 text-sm opacity-80">
 
 The honest cost: bundled CEF is **big**. Use the WebView backend when size matters.
 
@@ -973,58 +1048,13 @@ The honest cost: bundled CEF is **big**. Use the WebView backend when size matte
 Here's the whole landscape on one slide. I'm not going to read it — let people
 scan.
 
-Electrobun is the closest — it's caught up on rendering and cross-compile, so
-I'm not going to pretend those are ours alone. The three rows that are still
-genuinely ours: framework auto-detect, in-process calls instead of IPC, and the
-permission sandbox. Those don't exist anywhere else.
+The rows that are genuinely ours: framework auto-detect, in-process calls instead
+of IPC, and the permission sandbox. Those don't exist anywhere else.
 
 And the honest trade-off, last row: the CEF backend is large, same as Electron.
 That's the price of consistent rendering. If size matters more than pixel-
 identical UI, switch to the WebView backend. We give you the choice instead of
 making it for you.
--->
-
----
-layout: two-cols-header
----
-
-# Why a subcommand, not a new tool?
-
-::left::
-
-<div class="pr-4 text-lg">
-
-<v-clicks>
-
-- it **reuses** `deno compile`, the module loader, npm support, permissions, HMR
-- `deno --help` → "oh, I can build desktop apps?"
-- one config file, one toolchain, one mental model
-
-</v-clicks>
-
-</div>
-
-::right::
-
-<div v-click class="flex items-center justify-center h-full">
-
-<div class="text-center">
-<div class="text-5xl">🦕</div>
-<div class="mt-4 text-xl opacity-80">It's not a framework<br/>bolted onto Deno.</div>
-<div v-click class="mt-3 text-2xl">It's Deno, all the way down.</div>
-</div>
-
-</div>
-
-<!--
-Why is this a subcommand and not a separate project? Because it's not bolted on —
-it's built on the exact infrastructure that already exists. deno compile does the
-bundling. The same module loader, npm support, permission system, and HMR you use
-everywhere else.
-
-The payoff for you: there's no new toolchain. You run deno --help and discover you
-can ship a desktop app. One config file. One mental model. It's Deno all the way
-down.
 -->
 
 ---
@@ -1037,7 +1067,9 @@ layout: statement
 
 <JumpContent title="Today">
 
-Experimental, on a branch, but real. macOS, Windows, Linux. You can run it.
+Experimental, on a branch, but real.
+
+macOS, Windows, Linux. You can run it.
 
 </JumpContent>
 
@@ -1079,7 +1111,7 @@ than to rush a demo.
 layout: fact
 ---
 
-# Your web app is now a <span v-mark.cyan>desktop toolkit</span>.
+## Your web app is now a <span v-mark.cyan>desktop toolkit</span>.
 
 <div class="text-left max-w-xl mx-auto mt-6 text-lg space-y-1">
 
