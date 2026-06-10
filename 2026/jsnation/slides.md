@@ -177,9 +177,9 @@ Tiny binaries.
 
 ### Electrobun
 
-Binary diffs, small-ish.
+Bun-based, binary diffs, CEF **or** webview, cross-platform. The closest in spirit.
 
-<span class="opacity-70">…but macOS-only, and still a separate toolchain.</span>
+<span class="opacity-70">…but cross-process IPC, no framework auto-detect, and still a separate toolchain.</span>
 
 </div>
 
@@ -195,8 +195,9 @@ A **second** project. A **second** toolchain. A **second** mental model next to 
 
 <!--
 Quick tour, don't dwell. Electron: great, but huge. Tauri/Dioxus: small, but you
-give up the JS ecosystem and you can't cross-build. Electrobun: clever diffs, but
-macOS only.
+give up the JS ecosystem and you can't cross-build. Electrobun is actually the
+closest to us now — Bun-based, binary diffs, CEF or webview, cross-platform. I'll
+be honest about where we differ from it in a minute.
 
 The real tax underneath all of them: it's a whole separate thing to learn and
 maintain, bolted onto the app you already wrote.
@@ -914,17 +915,17 @@ class: text-sm
 
 <div class="overflow-hidden mt-2">
 
-|                           | Electron | Tauri / Dioxus | Electrobun  | **Deno Desktop**        |
-| ------------------------- | -------- | -------------- | ----------- | ----------------------- |
-| **Language**              | JS/TS    | Rust + web     | JS/TS (Bun) | **JS/TS (Deno)**        |
-| **Consistent UI**         | ✅       | ❌             | ❌          | **✅ (CEF)**            |
-| **npm / Node compat**     | ✅       | ❌             | ✅          | **✅**                  |
-| **Backend ↔ UI**          | IPC      | IPC            | IPC         | **in-process channels** |
-| **Framework auto-detect** | ❌       | ❌             | ❌          | **✅**                  |
-| **HMR**                   | ❌       | ✅             | ✅          | **✅**                  |
-| **Built-in auto-update**  | ✅ full  | ❌             | ✅ diff     | **✅ diff**             |
-| **Cross-compile**         | ✅       | ❌             | ❌          | **✅ `--target`**       |
-| **Permission sandbox**    | ❌       | ❌             | ❌          | **✅**                  |
+|                           | Electron | Tauri / Dioxus | Electrobun     | **Deno Desktop**        |
+| ------------------------- | -------- | -------------- | -------------- | ----------------------- |
+| **Language**              | JS/TS    | Rust + web     | JS/TS (Bun)    | **JS/TS (Deno)**        |
+| **Consistent UI**         | ✅       | ❌             | ✅ (CEF)       | **✅ (CEF)**            |
+| **npm / Node compat**     | ✅       | ❌             | ✅             | **✅**                  |
+| **Backend ↔ UI**          | IPC      | IPC            | IPC            | **in-process channels** |
+| **Framework auto-detect** | ❌       | ❌             | ❌             | **✅**                  |
+| **HMR**                   | ❌       | ✅             | ✅             | **✅**                  |
+| **Built-in auto-update**  | ✅ full  | ❌             | ✅ diff        | **✅ diff**             |
+| **Cross-compile**         | ✅       | ❌             | ✅             | **✅ `--target`**       |
+| **Permission sandbox**    | ❌       | ❌             | ❌             | **✅**                  |
 
 </div>
 
@@ -938,9 +939,10 @@ The honest cost: bundled CEF is **big**. Use the WebView backend when size matte
 Here's the whole landscape on one slide. I'm not going to read it — let people
 scan.
 
-The columns where we stand out: framework auto-detect, in-process calls,
-cross-compile, and the permission sandbox. Together those don't exist anywhere
-else.
+Electrobun is the closest — it's caught up on rendering and cross-compile, so
+I'm not going to pretend those are ours alone. The three rows that are still
+genuinely ours: framework auto-detect, in-process calls instead of IPC, and the
+permission sandbox. Those don't exist anywhere else.
 
 And the honest trade-off, last row: the CEF backend is large, same as Electron.
 That's the price of consistent rendering. If size matters more than pixel-

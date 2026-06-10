@@ -1,9 +1,30 @@
 import { join, relative } from "@std/path";
+import { TextLineStream } from "@std/streams";
 import talks from "./talks.json" with { type: "json" };
 import { walk } from "./util.ts";
 //import puppeteer from "puppeteer";
 
+// Stream a child's output line by line, prefixing each line with `prefix` so
+// the interleaved output of concurrent builds stays readable.
+function pipePrefixed(
+  readable: ReadableStream<Uint8Array>,
+  prefix: string,
+  write: (msg: string) => void,
+): Promise<void> {
+  return readable
+    .pipeThrough(new TextDecoderStream() as TransformStream<Uint8Array, string>)
+    .pipeThrough(new TextLineStream())
+    .pipeTo(
+      new WritableStream({
+        write(line) {
+          write(`${prefix} ${line}`);
+        },
+      }),
+    );
+}
+
 await walk(async (path) => {
+  const prefix = `[${path}]`;
   const command = new Deno.Command(Deno.execPath(), {
     cwd: path,
     args: [
@@ -14,26 +35,33 @@ await walk(async (path) => {
       "--out",
       join(Deno.cwd(), "dist", path),
     ],
+    stdout: "piped",
+    stderr: "piped",
   });
-  const output = await command.output();
-  if (output.success) {
-    console.log(`${path} build successfully`);
+  const child = command.spawn();
+  await Promise.all([
+    pipePrefixed(child.stdout, prefix, (msg) => console.log(msg)),
+    pipePrefixed(child.stderr, prefix, (msg) => console.error(msg)),
+  ]);
+  const status = await child.status;
+  if (status.success) {
+    console.log(`${prefix} build successfully`);
   } else {
-    console.log(`${path} build failed`);
-    console.log("--- stderr ---");
-    console.log(new TextDecoder().decode(output.stderr));
-    console.log();
-    console.log("--- out ---");
-    console.log(new TextDecoder().decode(output.stdout));
+    console.error(`${prefix} build failed`);
     Deno.exit(1);
   }
 });
 
-await new Deno.Command(Deno.execPath(), {
+const indexChild = new Deno.Command(Deno.execPath(), {
   args: ["run", "-A", "index.tsx"],
-  stdout: "null",
-  stderr: "null",
-}).output();
+  stdout: "piped",
+  stderr: "piped",
+}).spawn();
+await Promise.all([
+  pipePrefixed(indexChild.stdout, "[index.tsx]", (msg) => console.log(msg)),
+  pipePrefixed(indexChild.stderr, "[index.tsx]", (msg) => console.error(msg)),
+]);
+await indexChild.status;
 
 await Deno.writeTextFile(
   "dist/conferences",
