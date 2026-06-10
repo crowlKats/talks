@@ -1,5 +1,15 @@
 [
   {
+    "date": "2026-06-11",
+    "conference": {
+      "name": "JSNation",
+      "website": "https://jsnation.com/"
+    },
+    "title": "Deno Desktop: your web app, as a native app",
+    "slides": "slidev",
+    "duration": 30
+  },
+  {
     "date": "2025-11-16",
     "conference": {
       "name": "JSConf JP",
