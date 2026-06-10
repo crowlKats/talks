@@ -39,11 +39,17 @@ await walk(async (path) => {
     stderr: "piped",
   });
   const child = command.spawn();
-  await Promise.all([
-    pipePrefixed(child.stdout, prefix, (msg) => console.log(msg)),
-    pipePrefixed(child.stderr, prefix, (msg) => console.error(msg)),
-  ]);
+  const stdout = pipePrefixed(child.stdout, prefix, (msg) => console.log(msg));
+  const stderr = pipePrefixed(child.stderr, prefix, (msg) => console.error(msg));
+
+  console.log(`${prefix} waiting for child status`);
   const status = await child.status;
+  console.log(`${prefix} child status resolved: success=${status.success} code=${status.code} signal=${status.signal}`);
+
+  console.log(`${prefix} waiting for stdio streams to drain`);
+  await Promise.all([stdout, stderr]);
+  console.log(`${prefix} stdio streams drained`);
+
   if (status.success) {
     console.log(`${prefix} build successfully`);
   } else {
