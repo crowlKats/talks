@@ -10,7 +10,7 @@ layout: cover
 
 <img src="/deno.svg" class="w-28 mx-auto mb-4">
 
-# Deno Desktop
+# simpler desktop apps <br/> with Deno
 
 <div class="opacity-80 text-xl">
 
@@ -243,8 +243,8 @@ First public look · shipping as an experimental feature
 <!--
 THE reveal. This is the moment. Say the name out loud for the first time.
 
-"deno desktop". One subcommand, built into the runtime you might already have.
-And that dot — that dot is the whole talk.
+"deno desktop" — one subcommand, built into the runtime you might already have.
+Point it at a project and it becomes a desktop app. That's the whole talk.
 
 This is the first time we're showing it publicly. It's experimental. But it's
 real, and you can run it.
@@ -283,14 +283,10 @@ You get a desktop app. **Zero config.**
 
 </div>
 
-<div v-click="4" class="text-base opacity-60 mt-6">
-
-</div>
-
 <!--
-The headline feature. The dot means "auto-detect my framework." We inspect your
-project — your config, your build output — figure out you're a Next app, run your
-production server, and point a native window at it.
+The headline feature: run it in your project and it auto-detects the framework.
+We inspect your config and build output, figure out you're a Next app, run your
+production server, and point a desktop window at it.
 
 You change nothing. No desktop entrypoint, no IPC wiring, no new build step.
 
@@ -347,11 +343,9 @@ deno desktop main.ts
 
 </div>
 
-<div v-click class="mt-4">
+<div v-click class="mt-4 flex justify-center">
 
-<Win title="Hello">
-  <h1 class="text-3xl font-bold">Hello, desktop 👋</h1>
-</Win>
+<img src="/simple.png" class="rounded-lg shadow-xl max-h-[40%] object-contain" />
 
 </div>
 
@@ -381,13 +375,15 @@ live demo
 </div>
 
 <!--
-DEMO 1 — ~3 min. Keep it tight.
+DEMO 1 — ~2 min. The "it just works" moment.
 
-1. `deno desktop main.ts` → window opens.
-2. Add a Deno.BrowserWindow + a binding, call it from a button.
-3. Show alert() popping a NATIVE dialog.
+1. `npx create-next-app` → a stock Next.js app, nothing special.
+2. `deno desktop` in that folder → it auto-detects Next and a desktop window opens.
 
-Fallback if the demo gods are unkind: the next slides show the same code.
+That's the whole pitch in two commands: an unmodified framework app, running as a
+desktop app. No config, no desktop entrypoint.
+
+Fallback if the demo gods are unkind: the next slides show the API.
 -->
 
 ---
@@ -440,6 +436,79 @@ upgraded.
 
 bind() exposes a Deno-side function to the page. From the page you just call
 bindings.readNote(). Which brings me to the part I'm proud of...
+-->
+
+---
+layout: default
+---
+
+# Native, out of the box
+
+<div class="grid grid-cols-3 gap-x-8 gap-y-5 mt-8 text-base">
+
+<v-clicks>
+
+<div>
+
+**Dialogs**<br/>
+<span class="opacity-70">`alert` · `confirm` · `prompt`</span>
+
+</div>
+
+<div>
+
+**Notifications**<br/>
+<span class="opacity-70">Web `Notification` + OS permission</span>
+
+</div>
+
+<div>
+
+**System tray**<br/>
+<span class="opacity-70">icon · tooltip · menu · popovers</span>
+
+</div>
+
+<div>
+
+**Dock / taskbar**<br/>
+<span class="opacity-70">badge · bounce · menu</span>
+
+</div>
+
+<div>
+
+**Menus**<br/>
+<span class="opacity-70">app menu · context menus</span>
+
+</div>
+
+<div>
+
+**Windows**<br/>
+<span class="opacity-70">multiple · frameless · always-on-top</span>
+
+</div>
+
+<div>
+
+**Input events**<br/>
+<span class="opacity-70">keyboard · mouse · wheel · focus</span>
+
+</div>
+
+</v-clicks>
+
+</div>
+
+<!--
+And it's not just windows and dialogs — the whole native surface is there, all
+through web-shaped APIs. Native notifications via the standard Notification API,
+a system tray with menus and popovers, dock and taskbar badges, app and context
+menus, multiple windows (frameless, always-on-top), and the full input event
+stream.
+
+Don't read the grid — let it land as "yeah, it's all there."
 -->
 
 ---
@@ -565,24 +634,6 @@ If you're a plain app, Deno watches the files and hot-swaps the changed module
 into the running V8 instance directly. Same loop, no framework needed.
 
 Either way the process stays warm — nothing tears down.
--->
-
----
-layout: section
----
-
-# HMR, live.
-
-<div class="text-xl opacity-70 mt-4">
-
-live demo
-
-</div>
-
-<!--
-DEMO 2 — ~2 min. Window and editor side by side. Change a heading and a color,
-save, watch it update without losing state. Then add a top-level export to show
-the graceful full-reload fallback if you want.
 -->
 
 ---
@@ -764,17 +815,11 @@ Unified view is <span v-mark.cyan>CEF-only</span> — `--backend cef`.
 
 ::right::
 
-<div class="flex items-center justify-center h-full">
+<div class="flex flex-col items-center justify-center h-full">
 
-<Win title="DevTools — chrome://inspect">
-  <div class="font-mono text-sm space-y-2">
-    <div>▸ Elements · Console · Sources · Network</div>
-    <div class="opacity-60">Console context ▾</div>
-    <div class="pl-3">• Renderer <span class="opacity-50">(CEF)</span></div>
-    <div class="pl-3">• Deno <span class="opacity-50">(runtime)</span></div>
-    <div v-click class="text-cyan-400">one session · both targets</div>
-  </div>
-</Win>
+<img src="/devtools.png" class="rounded-lg shadow-xl max-h-[80%] object-contain" />
+
+<div v-click class="mt-3 text-sm text-cyan-400">one session · both targets</div>
 
 </div>
 
@@ -837,25 +882,6 @@ Soon: `.msi` · `.deb` · `.rpm`
 
 ::right::
 
-<div v-click="6">
-
-<Win title="MyApp.app">
-  <div class="text-sm font-mono opacity-80 space-y-1">
-    <div>Contents/</div>
-    <div class="pl-4">MacOS/        <span class="opacity-50">← your code + runtime</span></div>
-    <div class="pl-4">Frameworks/   <span class="opacity-50">← the engine</span></div>
-    <div class="pl-4">Resources/</div>
-    <div class="pl-4">Info.plist</div>
-  </div>
-</Win>
-
-<div class="mt-4 text-base opacity-80">
-
-Self-contained. No system Deno required to run it.
-
-</div>
-
-</div>
 
 <!--
 First, a real bundle. Same command, but with -o. The extension picks the format:
@@ -1081,30 +1107,8 @@ showing it. It runs on all three desktop platforms today.
 
 Where it's going: code signing as a single flag instead of a day of yak-shaving;
 a shared system engine so individual apps drop from hundreds of MB to a few; and a
-warm engine so windows appear in milliseconds instead of bootstrapping Chromium
+warm engine so windows appear in milliseconds instead of cold-starting the engine
 every time.
--->
-
----
-layout: section
----
-
-# Let's ship something, live.
-
-<div class="text-xl opacity-70 mt-4">
-
-a real framework app → a real binary
-
-</div>
-
-<!--
-DEMO 3 (the closer) — ~3 min, optional if time is tight.
-
-`deno desktop` on an actual Next/Vite project → native window. Then
-`deno desktop -o App.app` and open the bundle. End on the artifact.
-
-If you're behind on time, SKIP straight to the recap. Better to land the close
-than to rush a demo.
 -->
 
 ---
@@ -1134,12 +1138,21 @@ project.
 -->
 
 ---
-layout: quote
+layout: two-cols-header
 ---
 
 # Try it.
 
-<div class="text-xl opacity-90 mt-4">
+::left::
+
+
+<div class="text-xl opacity-90">
+
+```bash
+deno upgrade pr 33441
+```
+
+<br />
 
 ```bash
 deno desktop
@@ -1147,33 +1160,11 @@ deno desktop
 
 </div>
 
-<div class="mt-8 opacity-80">
+<br />
 
-docs → https://docs.deno.com/go/desktop
+https://deno.com
 
-</div>
+<br />
 
-<div class="mt-2 opacity-80">
+https://github.com/denoland/deno
 
-find me → @crowlkats
-
-</div>
-
-<div v-click class="mt-8 text-2xl">
-
-Thank you. 🦕
-
-</div>
-
-<div class="absolute inset-0 -z-10">
-  <JSRBackground />
-</div>
-
-<!--
-That's it. It's experimental, it's out there, and the simplest way to understand
-it is to point it at a project you already have and run "deno desktop".
-
-Try it, tell me what breaks, and thank you.
-
-(Leave the docs link up during Q&A.)
--->
