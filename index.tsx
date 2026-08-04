@@ -110,9 +110,9 @@ function Talk({ talk }: { talk: Talk }) {
             />
           )
           : (
-            <div class="absolute inset-0 size-full rounded-2xl shadow bg-gray-800/30 border border-gray-700/60 flex items-center justify-center p-6">
-              <span class="text-gray-500 text-sm text-center select-none">
-                {talk.conference.name}
+            <div class="absolute inset-0 size-full rounded-2xl shadow bg-gray-800/30 border border-gray-700/60 flex items-center justify-center px-6 pt-6 pb-12">
+              <span class="text-gray-500 text-center select-none">
+                {talk.title}
               </span>
             </div>
           )}
