@@ -5,8 +5,10 @@
       "name": "JSNation",
       "website": "https://jsnation.com/"
     },
+    "location": "Amsterdam, Netherlands",
     "title": "Deno Desktop: your web app, as a native app",
     "slides": "slidev",
+    "recording": "https://gitnation.com/contents/the-latest-from-deno",
     "duration": 30
   },
   {
@@ -15,6 +17,7 @@
       "name": "JSConf JP",
       "website": "https://jsconf.jp/"
     },
+    "location": "Tokyo, Japan",
     "title": "Deno Wrapped: What happened in Deno this year",
     "slides": "slidev",
     "recording": "https://www.youtube.com/watch?v=7eqSSuUfcRM",
@@ -26,8 +29,10 @@
       "name": "EuroRust",
       "website": "https://eurorust.eu/"
     },
+    "location": "Paris, France",
     "title": "From any to this: Using concrete error types instead of a catchall",
     "slides": "slidev",
+    "recording": "https://www.youtube.com/watch?v=f6eofqicw_s",
     "duration": 25
   },
   {
@@ -36,6 +41,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "JSR - 1 year later",
     "kind": "session",
     "slides": null,
@@ -47,6 +53,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "Deno AMA",
     "kind": "session",
     "slides": null,
@@ -58,6 +65,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "JavaScript™ Standards",
     "kind": "session",
     "slides": null,
@@ -69,6 +77,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "Deno Deploy EA",
     "kind": "session",
     "slides": null,
@@ -80,6 +89,7 @@
       "name": "JSNation",
       "website": "https://jsnation.com/"
     },
+    "location": "Amsterdam, Netherlands",
     "title": "JSR: Building an Open Registry for the JavaScript Community",
     "slides": "slidev",
     "duration": 30
@@ -90,10 +100,22 @@
       "name": "Web Engines Hackfest",
       "website": "https://webengineshackfest.org/"
     },
+    "location": "A Coruña, Spain",
     "title": "JSR: under the hood & native support in the ecosystem",
     "slides": "https://docs.google.com/presentation/d/1DAgRPumfFNPxU0gmWGNMQALomrIlDvvUHCELTgWDdDk/edit?usp=sharing",
     "recording": "https://www.youtube.com/watch?v=Lc15pLhzGao",
     "duration": 25
+  },
+  {
+    "date": "2025-03-14",
+    "conference": {
+      "name": "toranoana.deno #20",
+      "website": "https://yumenosora.connpass.com/event/342361/"
+    },
+    "location": "Tokyo, Japan",
+    "title": "What is JSR",
+    "slides": "https://docs.google.com/presentation/d/1FuAMUlgaRJ2oVArjwC1sfB1RAa4wWtojL9ck4Smk-ms/edit?usp=sharing",
+    "duration": 15
   },
   {
     "date": "2025-02-02",
@@ -101,17 +123,24 @@
       "name": "FOSDEM",
       "website": "https://fosdem.org/2025/"
     },
+    "location": "Brussels, Belgium",
+    "copresenters": [
+      {
+        "name": "Luca Casonato",
+        "website": "https://lcas.dev"
+      }
+    ],
     "title": "JSR: from private ownership to open governance",
     "slides": "https://docs.google.com/presentation/d/1nUOxOsO6wrv0PEgzYDeViBTZfSyOVVQDHC76xZ75kgY/edit?usp=sharing",
     "duration": 25
   },
-
   {
     "date": "2024-11-11",
     "conference": {
       "name": "Rustlab",
       "website": "https://rustlab.it/"
     },
+    "location": "Florence, Italy",
     "title": "How to integrate Javascript in your Rust program",
     "slides": "https://docs.google.com/presentation/d/1nUOicqyq58nNdP9PF3F33THb0oBv-ZRbYdBzDJZpWS0/edit?usp=sharing",
     "duration": 25
@@ -122,9 +151,21 @@
       "name": "Codemotion Milan",
       "website": "https://conferences.codemotion.com/milan2024/"
     },
+    "location": "Milan, Italy",
     "title": "Building a Browser Based Code Editor",
     "slides": null,
     "duration": 45
+  },
+  {
+    "date": "2024-08-07",
+    "conference": {
+      "name": "Beyond Coding Podcast",
+      "website": "https://www.youtube.com/channel/UCdMz6KKEDW_1Qqas-ya7S6w"
+    },
+    "title": "From Contributions to Career: Leo Kettmeir's Path to Deno",
+    "slides": null,
+    "recording": "https://youtu.be/Oe5LdKjYx3g",
+    "duration": 46
   },
   {
     "date": "2024-06-13",
@@ -132,6 +173,7 @@
       "name": "JSNation",
       "website": "https://jsnation.com/"
     },
+    "location": "Amsterdam, Netherlands",
     "title": "JSR – Next Generation JavaScript Registry",
     "slides": "https://docs.google.com/presentation/d/1--hZq7O9hdc0h-UVKOXq8Ccr9WQWtjHNdFMQNq3bZXM/edit?usp=sharing",
     "duration": 7
@@ -142,6 +184,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "How Deno works under the hood",
     "kind": "session",
     "slides": null,
@@ -153,6 +196,7 @@
       "name": "JSCraftCamp",
       "website": "https://jscraftcamp.org/"
     },
+    "location": "Munich, Germany",
     "title": "Introduction to JSR and how it works",
     "kind": "session",
     "slides": null,
@@ -164,6 +208,7 @@
       "name": "Web Engines Hackfest",
       "website": "https://webengineshackfest.org/"
     },
+    "location": "A Coruña, Spain",
     "title": "History of WebGPU in Deno",
     "slides": "https://docs.google.com/presentation/d/1HZ0aRDB4pJ2kDAeVYcO0vBFakQZBzg7uV6SgUunjRBE/edit?usp=sharing",
     "recording": "https://www.youtube.com/watch?v=jkKwvzRhFyY",
@@ -175,6 +220,7 @@
       "name": "FOSDEM",
       "website": "https://fosdem.org/2024/"
     },
+    "location": "Brussels, Belgium",
     "title": "Building your own JavaScript runtime with Rust",
     "slides": "https://docs.google.com/presentation/d/1VJyN3Zv9aHa7IO8R59hJIViMQI3SJrYqeJSgwLFRGfw/edit?usp=sharing",
     "duration": 25

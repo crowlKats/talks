@@ -32,6 +32,31 @@
           }
         }
       },
+      "location": {
+        "type": "string",
+        "description": "Where the presentation took place, as \"City, Country\". Omitted for remote-only appearances."
+      },
+      "copresenters": {
+        "type": "array",
+        "description": "Other people who presented alongside, besides Leo Kettmeir.",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The co-presenter's name."
+            },
+            "website": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL of the co-presenter's website, if they have one."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
       "title": {
         "type": "string",
         "description": "The title of the presentation."

@@ -8,6 +8,8 @@ interface Talk {
     name: string;
     website: string;
   };
+  location?: string; // "City, Country"; absent for remote-only appearances
+  copresenters?: { name: string; website?: string }[];
   title: string;
   recording?: string;
   slides: "slidev" | string | null;
@@ -62,7 +64,12 @@ function Talk({ talk }: { talk: Talk }) {
 
   let slidesLink = null;
 
-  const talkId = talk.conference.name.toLowerCase().replaceAll(" ", "");
+  // Strip everything that would need escaping in a URL, so names like
+  // "toranoana.deno #20" still map to a usable path.
+  const talkId = talk.conference.name.toLowerCase().replaceAll(
+    /[^a-z0-9.-]/g,
+    "",
+  );
 
   if (talk.slides === "slidev") {
     slidesLink = `/${date.getFullYear()}/${talkId}`;
@@ -112,13 +119,40 @@ function Talk({ talk }: { talk: Talk }) {
             {talk.kind == "session" && <span>(discussion session)</span>}
           </span>
         </h3>
+        {talk.copresenters && (
+          <div class="text-sm text-gray-400 mt-1">
+            with{" "}
+            {talk.copresenters.map((copresenter, i) => (
+              <span key={copresenter.name}>
+                {i > 0 && ", "}
+                {copresenter.website
+                  ? (
+                    <a
+                      href={copresenter.website}
+                      class="transition-all duration-300 hover:text-amber-500 underline underline-offset-4 decoration-dashed hover:decoration-solid"
+                    >
+                      {copresenter.name}
+                    </a>
+                  )
+                  : copresenter.name}
+              </span>
+            ))}
+          </div>
+        )}
         <div class="flex justify-between items-end gap-4 text-sm mt-auto">
-          <a
-            href={talk.conference.website}
-            class="transition-all duration-300 hover:text-amber-500 underline underline-offset-4 decoration-dashed hover:decoration-solid truncate max-w-[50%]"
-          >
-            {talk.conference.name}
-          </a>
+          <div class="flex flex-col min-w-0 max-w-[50%]">
+            <a
+              href={talk.conference.website}
+              class="transition-all duration-300 hover:text-amber-500 underline underline-offset-4 decoration-dashed hover:decoration-solid truncate"
+            >
+              {talk.conference.name}
+            </a>
+            {talk.location && (
+              <span class="text-xs text-gray-400 truncate">
+                {talk.location}
+              </span>
+            )}
+          </div>
           <div class="flex items-center gap-4 whitespace-nowrap">
             <span class="flex items-center gap-1">
               <TbClockHour1 /> <span>{talk.duration} min</span>
