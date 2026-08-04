@@ -7,6 +7,7 @@
     },
     "location": "Amsterdam, Netherlands",
     "title": "Deno Desktop: your web app, as a native app",
+    "kind": "talk",
     "slides": "slidev",
     "recording": "https://gitnation.com/contents/the-latest-from-deno",
     "duration": 30
@@ -19,6 +20,7 @@
     },
     "location": "Tokyo, Japan",
     "title": "Deno Wrapped: What happened in Deno this year",
+    "kind": "talk",
     "slides": "slidev",
     "recording": "https://www.youtube.com/watch?v=7eqSSuUfcRM",
     "duration": 25
@@ -31,6 +33,7 @@
     },
     "location": "Paris, France",
     "title": "From any to this: Using concrete error types instead of a catchall",
+    "kind": "talk",
     "slides": "slidev",
     "recording": "https://www.youtube.com/watch?v=f6eofqicw_s",
     "duration": 25
@@ -91,6 +94,7 @@
     },
     "location": "Amsterdam, Netherlands",
     "title": "JSR: Building an Open Registry for the JavaScript Community",
+    "kind": "talk",
     "slides": "slidev",
     "duration": 30
   },
@@ -102,6 +106,7 @@
     },
     "location": "A Coruña, Spain",
     "title": "JSR: under the hood & native support in the ecosystem",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1DAgRPumfFNPxU0gmWGNMQALomrIlDvvUHCELTgWDdDk/edit?usp=sharing",
     "recording": "https://www.youtube.com/watch?v=Lc15pLhzGao",
     "duration": 25
@@ -114,6 +119,7 @@
     },
     "location": "Tokyo, Japan",
     "title": "What is JSR",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1FuAMUlgaRJ2oVArjwC1sfB1RAa4wWtojL9ck4Smk-ms/edit?usp=sharing",
     "duration": 15
   },
@@ -131,6 +137,7 @@
       }
     ],
     "title": "JSR: from private ownership to open governance",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1nUOxOsO6wrv0PEgzYDeViBTZfSyOVVQDHC76xZ75kgY/edit?usp=sharing",
     "duration": 25
   },
@@ -142,6 +149,7 @@
     },
     "location": "Florence, Italy",
     "title": "How to integrate Javascript in your Rust program",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1nUOicqyq58nNdP9PF3F33THb0oBv-ZRbYdBzDJZpWS0/edit?usp=sharing",
     "duration": 25
   },
@@ -153,6 +161,7 @@
     },
     "location": "Milan, Italy",
     "title": "Building a Browser Based Code Editor",
+    "kind": "talk",
     "slides": null,
     "duration": 45
   },
@@ -163,6 +172,7 @@
       "website": "https://www.youtube.com/channel/UCdMz6KKEDW_1Qqas-ya7S6w"
     },
     "title": "From Contributions to Career: Leo Kettmeir's Path to Deno",
+    "kind": "podcast",
     "slides": null,
     "recording": "https://youtu.be/Oe5LdKjYx3g",
     "duration": 46
@@ -175,6 +185,7 @@
     },
     "location": "Amsterdam, Netherlands",
     "title": "JSR – Next Generation JavaScript Registry",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1--hZq7O9hdc0h-UVKOXq8Ccr9WQWtjHNdFMQNq3bZXM/edit?usp=sharing",
     "duration": 7
   },
@@ -210,6 +221,7 @@
     },
     "location": "A Coruña, Spain",
     "title": "History of WebGPU in Deno",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1HZ0aRDB4pJ2kDAeVYcO0vBFakQZBzg7uV6SgUunjRBE/edit?usp=sharing",
     "recording": "https://www.youtube.com/watch?v=jkKwvzRhFyY",
     "duration": 20
@@ -222,6 +234,7 @@
     },
     "location": "Brussels, Belgium",
     "title": "Building your own JavaScript runtime with Rust",
+    "kind": "talk",
     "slides": "https://docs.google.com/presentation/d/1VJyN3Zv9aHa7IO8R59hJIViMQI3SJrYqeJSgwLFRGfw/edit?usp=sharing",
     "duration": 25
   }

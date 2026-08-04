@@ -9,6 +9,7 @@
       "date",
       "conference",
       "title",
+      "kind",
       "duration",
       "slides"
     ],
@@ -85,7 +86,8 @@
       },
       "kind": {
         "type": "string",
-        "enum": ["talk", "session"]
+        "description": "What kind of activity this was: a conference talk, a discussion session at an unconference, or a podcast appearance.",
+        "enum": ["talk", "session", "podcast"]
       },
       "duration": {
         "type": "number",

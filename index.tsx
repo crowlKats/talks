@@ -13,9 +13,15 @@ interface Talk {
   title: string;
   recording?: string;
   slides: "slidev" | string | null;
-  kind?: "talk" | "session";
+  kind: "talk" | "session" | "podcast";
   duration: number; // Duration in minutes
 }
+
+const KIND_LABELS: Record<Talk["kind"], string> = {
+  talk: "Talk",
+  session: "Session",
+  podcast: "Podcast",
+};
 
 function Index() {
   const groupedTalks: Record<number, Talk[]> = {};
@@ -26,12 +32,15 @@ function Index() {
   }
 
   return (
-    <html>
+    <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Talks — Leo Kettmeir</title>
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>
-        <div class="px-32 divide-y-1 divide-gray-600">
+        <div class="px-6 sm:px-10 lg:px-20 xl:px-32 divide-y-1 divide-gray-600">
           {Object.entries(groupedTalks).toSorted(([a], [b]) =>
             b.localeCompare(a)
           ).map(([year, talks]) => (
@@ -52,7 +61,7 @@ function Year({ year, talks }: { year: string; talks: Talk[] }) {
     <div class="pt-8 pb-16">
       <h2 class="font-bold text-3xl">{year}</h2>
 
-      <div class="grid gap-20 md:grid-cols-3 mt-4">
+      <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 mt-4">
         {talks.map((talk) => <Talk key={talk.date} talk={talk} />)}
       </div>
     </div>
@@ -87,38 +96,59 @@ function Talk({ talk }: { talk: Talk }) {
 
   return (
     <div class="flex flex-col h-full">
-      <div class="mb-3">
-        <div class="flex justify-between gap-3">
-          <img
-            src={imgPath}
-            class={`rounded-2xl shadow w-9/10 bg-gray-800/30 min-h-32 box-content flex items-center justify-center ${
-              hasImage ? "" : "p-6"
-            }`}
-            alt={talk.title}
-          />
+      {
+        /* Fixed aspect ratio, so cards line up across a row no matter what the
+          cover's own proportions are — or whether it has one at all. */
+      }
+      <div class="relative aspect-video mb-3">
+        {hasImage
+          ? (
+            <img
+              src={imgPath}
+              class="absolute inset-0 size-full rounded-2xl shadow object-cover bg-gray-800/30"
+              alt=""
+            />
+          )
+          : (
+            <div class="absolute inset-0 size-full rounded-2xl shadow bg-gray-800/30 border border-gray-700/60 flex items-center justify-center p-6">
+              <span class="text-gray-500 text-sm text-center select-none">
+                {talk.conference.name}
+              </span>
+            </div>
+          )}
 
-          <div class="mt-5">
+        <span class="absolute bottom-2 left-2 rounded-full bg-black/60 px-2.5 py-1 text-xs text-gray-300 backdrop-blur-sm select-none">
+          {KIND_LABELS[talk.kind]}
+        </span>
+
+        {(slidesLink || talk.recording) && (
+          <div class="absolute top-2 right-2 flex gap-1.5">
             {slidesLink && (
-              <a href={slidesLink}>
+              <a
+                href={slidesLink}
+                title="Slides"
+                aria-label="Slides"
+                class="rounded-full bg-black/60 p-1.5 backdrop-blur-sm transition-colors duration-300 hover:text-amber-500"
+              >
                 <TbPresentationFilled class="size-5" />
               </a>
             )}
             {talk.recording && (
-              <a href={talk.recording}>
+              <a
+                href={talk.recording}
+                title="Recording"
+                aria-label="Recording"
+                class="rounded-full bg-black/60 p-1.5 backdrop-blur-sm transition-colors duration-300 hover:text-amber-500"
+              >
                 <TbVideoFilled class="size-5" />
               </a>
             )}
           </div>
-        </div>
+        )}
       </div>
 
       <div class="flex-grow flex flex-col min-h-[4.5rem]">
-        <h3 class="font-semibold mt-1">
-          <span class="bg-[#272727] px-1 py-0.5 leading-relaxed">
-            {talk.title}{" "}
-            {talk.kind == "session" && <span>(discussion session)</span>}
-          </span>
-        </h3>
+        <h3 class="font-semibold mt-1">{talk.title}</h3>
         {talk.copresenters && (
           <div class="text-sm text-gray-400 mt-1">
             with{" "}
